@@ -1,0 +1,28 @@
+Instruction for Skiplist Assignment During Class:
+
+Concept of algorithmic efficiency
+Find thing in the skiplist by O(Log2n) not O(n).
+
+Only one level (Skiplist(1))
+Level 0: Doubly linked list
+Constructor should do what
+When creating the node, where should it point to?
+Start with doubly linked list and test constructor/destructor (Delete thing -- Running valgrind to see memory leakage)
+
+Try with multi layer skiplist
+Can try change the randrange to be 100% to test (Easier)
+To simply check if the node points appropriately, add correctly...etc
+
+*Doubly link list: points to previous and after it.
+*Regardless of level, each node has 4 points (Up down prev and after).
+
+*Add method, one is add one at a time. : Assume no duplication
+*The other add method with vector as param, we can add multiple at the same time. (Can call the previous add method): Assume no duplication
+
+Front guard and Rear guard: Used to test if we reach the start or end side yet (the -INF or +INF). TO prevent going off the range.
+Front Guard |L(3)----------| Rear Guard
+Front Guard |L(2)----------| Rear Guard
+Front Guard |L(1)----------| Rear Guard
+Front Guard |L(0)----------| Rear Guard
+
+

@@ -1,1 +1,2 @@
-# Assignment-4-Winter-2022-CSS342-Skiplist-ADT
+Skiplist
+Goals: Working with dynamic arrays, pointers, doubly linked lists

@@ -1,0 +1,430 @@
+Mon 22 Nov 2021 09:55:27 PM PST
+Linux csslab5h 4.19.0-17-amd64 #1 SMP Debian 4.19.194-3 (2021-07-18) x86_64 GNU/Linux
+uid=1178990(kchou61) gid=2121178990(kchou61) groups=2121178990(kchou61),605559(lab-access)
+=====================================================
+1. Compiles without warnings with -Wall -Wextra flags
+=====================================================
+=====================================================
+2. Runs and produces correct output
+=====================================================
+Level: 4 -- -2147483648, 2147483647, 
+Level: 3 -- -2147483648, 2147483647, 
+Level: 2 -- -2147483648, 3, 7, 2147483647, 
+Level: 1 -- -2147483648, 1, 3, 7, 2147483647, 
+Level: 0 -- -2147483648, 1, 3, 5, 7, 2147483647, 
+
+7 ? true
+3 ? true
+-100 ? false
+100 ? false
+Level: 4 -- -2147483648, 2147483647, 
+Level: 3 -- -2147483648, 2147483647, 
+Level: 2 -- -2147483648, 3, 7, 2147483647, 
+Level: 1 -- -2147483648, 1, 3, 7, 2147483647, 
+Level: 0 -- -2147483648, 1, 5, 7, 2147483647, 
+
+1 ?true
+Level: 4 -- -2147483648, 2147483647, 
+Level: 3 -- -2147483648, 2147483647, 
+Level: 2 -- -2147483648, 3, 7, 2147483647, 
+Level: 1 -- -2147483648, 1, 3, 7, 2147483647, 
+Level: 0 -- -2147483648, 1, 5, 7, 2147483647, 
+
+Done.
+=====================================================
+3. clang-tidy warnings are fixed
+=====================================================
+=====================================================
+4. clang-format does not find any formatting issues
+=====================================================
+Running clang-format on ./main.cpp
+Running clang-format on ./skiplist.cpp
+=====================================================
+5. No memory leaks using g++
+=====================================================
+=====================================================
+6. No memory leaks using valgrind, look for "definitely lost" 
+=====================================================
+./create-output.sh: line 122: 95469 Segmentation fault      valgrind --log-file="valgrind-output.txt" $EXEC_PROGRAM > /dev/null 2> /dev/null
+==95469== Memcheck, a memory error detector
+==95469== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==95469== Using Valgrind-3.14.0 and LibVEX; rerun with -h for copyright info
+==95469== Command: ./a.out
+==95469== Parent PID: 95398
+==95469== 
+==95469== Invalid read of size 8
+==95469==    at 0x10B7E1: SkipList::remove(int) (skiplist.cpp:174)
+==95469==    by 0x10A654: test1() (main.cpp:26)
+==95469==    by 0x10A750: main (main.cpp:34)
+==95469==  Address 0x4d691c8 is 8 bytes inside a block of size 40 free'd
+==95469==    at 0x4836EAB: operator delete(void*) (vg_replace_malloc.c:576)
+==95469==    by 0x10B873: SkipList::remove(int) (skiplist.cpp:188)
+==95469==    by 0x10A5F3: test1() (main.cpp:23)
+==95469==    by 0x10A750: main (main.cpp:34)
+==95469==  Block was alloc'd at
+==95469==    at 0x4835DEF: operator new(unsigned long) (vg_replace_malloc.c:334)
+==95469==    by 0x10B5C3: SkipList::add(int) (skiplist.cpp:112)
+==95469==    by 0x10A3E5: test1() (main.cpp:13)
+==95469==    by 0x10A750: main (main.cpp:34)
+==95469== 
+==95469== Invalid read of size 4
+==95469==    at 0x10B7E5: SkipList::remove(int) (skiplist.cpp:174)
+==95469==    by 0x10A654: test1() (main.cpp:26)
+==95469==    by 0x10A750: main (main.cpp:34)
+==95469==  Address 0x0 is not stack'd, malloc'd or (recently) free'd
+==95469== 
+==95469== 
+==95469== Process terminating with default action of signal 11 (SIGSEGV)
+==95469==  Access not within mapped region at address 0x0
+==95469==    at 0x10B7E5: SkipList::remove(int) (skiplist.cpp:174)
+==95469==    by 0x10A654: test1() (main.cpp:26)
+==95469==    by 0x10A750: main (main.cpp:34)
+==95469==  If you believe this happened as a result of a stack
+==95469==  overflow in your program's main thread (unlikely but
+==95469==  possible), you can try to increase the size of the
+==95469==  main thread stack using the --main-stacksize= flag.
+==95469==  The main thread stack size used in this run was 8388608.
+==95469== 
+==95469== HEAP SUMMARY:
+==95469==     in use at exit: 800 bytes in 20 blocks
+==95469==   total heap usage: 24 allocs, 4 frees, 77,648 bytes allocated
+==95469== 
+==95469== LEAK SUMMARY:
+==95469==    definitely lost: 0 bytes in 0 blocks
+==95469==    indirectly lost: 0 bytes in 0 blocks
+==95469==      possibly lost: 0 bytes in 0 blocks
+==95469==    still reachable: 800 bytes in 20 blocks
+==95469==         suppressed: 0 bytes in 0 blocks
+==95469== Rerun with --leak-check=full to see details of leaked memory
+==95469== 
+==95469== For counts of detected and suppressed errors, rerun with: -v
+==95469== ERROR SUMMARY: 2 errors from 2 contexts (suppressed: 0 from 0)
+=====================================================
+7. Tests have full code coverage
+=====================================================
+File '/home/NETID/kchou61/ass4/main.cpp':
+Name                        Regions    Miss   Cover     Lines    Miss   Cover
+-----------------------------------------------------------------------------
+test1()                           1       0 100.00%        23       0 100.00%
+main                              1       0 100.00%         7       0 100.00%
+-----------------------------------------------------------------------------
+TOTAL                             2       0 100.00%        30       0 100.00%
+
+File '/home/NETID/kchou61/ass4/skiplist.cpp':
+Name                                                           Regions    Miss   Cover     Lines    Miss   Cover
+----------------------------------------------------------------------------------------------------------------
+operator<<(std::ostream&, SkipList const&)                           6       0 100.00%        12       0 100.00%
+SNode::SNode(int)                                                    1       0 100.00%         6       0 100.00%
+SkipList::SkipList(int, int)                                         7       0 100.00%        24       0 100.00%
+SkipList::shouldInsertAtHigher() const                               1       0 100.00%         3       0 100.00%
+SkipList::add(std::vector<int, std::allocator<int> > const&)         6       0 100.00%        12       0 100.00%
+SkipList::add(int)                                                  15       0 100.00%        44       0 100.00%
+SkipList::~SkipList()                                                6       0 100.00%        15       0 100.00%
+SkipList::remove(int)                                               11       0 100.00%        31       0 100.00%
+SkipList::addBefore(SNode*, SNode*)                                  1       0 100.00%        15       0 100.00%
+SkipList::contains(int) const                                        8       0 100.00%        13       0 100.00%
+----------------------------------------------------------------------------------------------------------------
+TOTAL                                                               62       0 100.00%       175       0 100.00%
+/home/NETID/kchou61/ass4/main.cpp:
+    1|       |#include <cassert>
+    2|       |#include <iostream>
+    3|       |
+    4|       |#include "skiplist.h"
+    5|       |
+    6|       |using namespace std;
+    7|       |
+    8|      1|void test1() {
+    9|      1|  // setting seed for easy testing
+   10|      1|  srand(0);
+   11|      1|  SkipList skp(5, 80);
+   12|      1|  cout << boolalpha;
+   13|      1|  skp.add(3);
+   14|      1|  skp.add(5);
+   15|      1|  // cannot add existing
+   16|      1|  assert(!skp.add(vector<int>{1, 7}));
+   17|      1|  skp.add(1);
+   18|      1|  cout << skp << endl;
+   19|      1|  cout << "7 ? " << skp.contains(7) << endl;
+   20|      1|  cout << "3 ? " << skp.contains(3) << endl;
+   21|      1|  cout << "-100 ? " << skp.contains(-100) << endl;
+   22|      1|  cout << "100 ? " << skp.contains(100) << endl;
+   23|      1|  bool result = skp.remove(5);
+   24|      1|  cout << skp << endl;
+   25|      1|  assert(result);
+   26|      1|  result = skp.remove(5);
+   27|      1|  assert(!result);
+   28|      1|  cout << "1 ?" << skp.contains(1) << endl;
+   29|      1|  cout << skp << endl;
+   30|      1|}
+   31|       |
+   32|      1|int main() {
+   33|      1|
+   34|      1|  test1();
+   35|      1|
+   36|      1|  cout << "Done." << endl;
+   37|      1|  return 0;
+   38|      1|}
+
+/home/NETID/kchou61/ass4/skiplist.cpp:
+    1|       |// Name: Andrew Chou
+    2|       |// Assignment: 4
+    3|       |// modified by mashhadi on 14th feb to add an alternative op<<
+    4|       |
+    5|       |#include <cassert>
+    6|       |#include <climits>
+    7|       |#include <cstdlib>
+    8|       |#include <iostream>
+    9|       |#include <vector>
+   10|       |
+   11|       |#include "skiplist.h"
+   12|       |
+   13|       |using namespace std;
+   14|       |
+   15|       |// Pre: No display available
+   16|       |// Post: printing the skiplist to console.
+   17|      3|ostream &operator<<(ostream &Out, const SkipList &SkipL) {
+   18|     18|  for (int Index = SkipL.maxLevel - 1; Index >= 0; Index--) {
+   19|     15|    Out << "Level: " + to_string(Index) + " -- ";
+   20|     15|    SNode *Curr = SkipL.FrontGuards[Index];
+   21|     70|    while (Curr != nullptr) {
+   22|     55|      Out << to_string(Curr->value) + ", ";
+   23|     55|      Curr = Curr->forward;
+   24|     55|    }
+   25|     15|    Out << "\n";
+   26|     15|  }
+   27|      3|  return Out;
+   28|      3|}
+   29|       |
+   30|       |// Constructor for SNode Class
+   31|       |// set the data, set all other pointers to nullptr
+   32|       |// Pre: no pointer available
+   33|       |// Post: assign value to private variable value
+   34|       |// set all pointers to nullptr
+   35|     19|SNode::SNode(int value) : value{value} {
+   36|     19|  forward = nullptr;
+   37|     19|  backward = nullptr;
+   38|     19|  up = nullptr;
+   39|     19|  down = nullptr;
+   40|     19|}
+   41|       |
+   42|       |// Constructor for Skiplist
+   43|       |// Pre: no skiplist info available
+   44|       |// Post: assign value to maxLevel and probability
+   45|       |// dynamically allocated frontguard rearguard
+   46|       |// and store the pointers to the front guard and rear guard array
+   47|       |SkipList::SkipList(int maxLevel, int probability)
+   48|      1|    : maxLevel{maxLevel}, probability{probability} {
+   49|      1|  assert(maxLevel > 0 && probability >= 0 && probability < 100);
+   50|      1|  // Creating the frontguard, rearguard array to store pointers
+   51|      1|  FrontGuards = new SNode *[maxLevel];
+   52|      1|  RearGuards = new SNode *[maxLevel];
+   53|      6|  for (int i = 0; i < maxLevel; i++) {
+   54|      5|    SNode *tmpFront = new SNode(INT_MIN);
+   55|      5|    SNode *tmpRear = new SNode(INT_MAX);
+   56|      5|    // Store in FrontGuards array
+   57|      5|    FrontGuards[i] = tmpFront;
+   58|      5|    // Store in RearGuards array
+   59|      5|    RearGuards[i] = tmpRear;
+   60|      5|    // tie nodes forward and backward
+   61|      5|    FrontGuards[i]->forward = RearGuards[i];
+   62|      5|    RearGuards[i]->backward = FrontGuards[i];
+   63|      5|  }
+   64|      1|  // tie nodes up and down
+   65|      5|  for (int i = maxLevel - 1; i >= 1; i--) {
+   66|      4|    FrontGuards[i]->down = FrontGuards[i - 1];
+   67|      4|    FrontGuards[i - 1]->up = FrontGuards[i];
+   68|      4|    RearGuards[i]->down = RearGuards[i - 1];
+   69|      4|    RearGuards[i - 1]->up = RearGuards[i];
+   70|      4|  }
+   71|      1|}
+   72|       |
+   73|       |// The flip coin algorithm to see if it should increase height
+   74|       |// Pre: no flip coin algorithm
+   75|       |// Post: flip coin depending on the probability provided
+   76|      9|bool SkipList::shouldInsertAtHigher() const {
+   77|      9|  return rand() % 100 > probability;
+   78|      9|}
+   79|       |
+   80|       |// Pre: no value added
+   81|       |// Post: adding values of vector to the skiplist
+   82|       |// No duplicate allowed
+   83|      1|bool SkipList::add(const vector<int> &values) {
+   84|      1|  int size = values.size();
+   85|      1|  bool existing;
+   86|      3|  for (int i = 0; i < size; i++) {
+   87|      2|    existing = contains(values.at(i));
+   88|      2|    // Not exist
+   89|      2|    if (existing == false) {
+   90|      2|      add(values.at(i)); // Add the non existence value
+   91|      2|    }
+   92|      2|  }
+   93|      1|  return false;
+   94|      1|}
+   95|       |
+   96|       |// Pre: No value added
+   97|       |// Post: add one value to the skiplist accordingly
+   98|       |// insert that value to next level depending on probability
+   99|       |// No duplicate allowed
+  100|      5|bool SkipList::add(int value) {
+  101|      5|  // temporary node pointer
+  102|      5|  SNode *tmp = FrontGuards[0]->forward; // Step 1
+  103|      5|  // Step 2.
+  104|      9|  while (tmp->forward != nullptr && tmp->value < value) {
+  105|      4|    tmp = tmp->forward;
+  106|      4|  }
+  107|      5|  // Step 3.
+  108|      5|  if (tmp->value == value) {
+  109|      1|    return false;
+  110|      1|  }
+  111|      4|  // Step 4.
+  112|      4|  SNode *newNode = new SNode(value);
+  113|      4|  addBefore(newNode, tmp);
+  114|      4|  int level = 1;
+  115|      4|  // Insert at higher level?
+  116|      4|  // While condition here is the flip coin condition, 50-50 increase height
+  117|      9|  while (level < maxLevel) {
+  118|      9|    if (shouldInsertAtHigher()) { // Step 8 (Toss Coin)
+  119|      5|      // Step 1.
+  120|      5|      SNode *newUpper = new SNode(value);
+  121|      5|      // Step 2.
+  122|      5|      newNode->up = newUpper;
+  123|      5|      newUpper->down = newNode;
+  124|      5|      // Step 3.
+  125|      5|      SNode *curr = newNode->backward;
+  126|      6|      while (curr->up == nullptr) {
+  127|      1|        curr = curr->backward;
+  128|      1|      }
+  129|      5|      // Step 4.
+  130|      5|      curr = curr->up;
+  131|      5|      // Step 5.
+  132|      5|      curr = curr->forward;
+  133|      5|      // Step 6.
+  134|      5|      addBefore(newUpper, curr);
+  135|      5|      // Step 7.
+  136|      5|      newNode = newUpper;
+  137|      5|      level++;
+  138|      5|    } else {
+  139|      4|      break;
+  140|      4|    }
+  141|      9|  }
+  142|      4|  return true;
+  143|      4|}
+  144|       |
+  145|       |// Pre: memory leak
+  146|       |// Post: delete the pointer and the array of pointers
+  147|       |// to prevent memory leak
+  148|      1|SkipList::~SkipList() {
+  149|      1|  // need to delete individual nodes
+  150|      1|  SNode *curr;
+  151|      1|  SNode *tmp;
+  152|      6|  for (int i = maxLevel - 1; i >= 0; i--) {
+  153|      5|    curr = FrontGuards[i];
+  154|     23|    while (curr != nullptr) {
+  155|     18|      tmp = curr;
+  156|     18|      curr = curr->forward;
+  157|     18|      delete tmp;
+  158|     18|    }
+  159|      5|  }
+  160|      1|  delete[] FrontGuards;
+  161|      1|  delete[] RearGuards;
+  162|      1|}
+  163|       |
+  164|       |// Pre: no value removed
+  165|       |// Post: disconnect the node for the data
+  166|       |// delete the pointer for that node for memory leak prevention
+  167|      2|bool SkipList::remove(int data) {
+  168|      2|  // Starting from the top left
+  169|      2|  SNode *curr = FrontGuards[maxLevel - 1];
+  170|      2|  SNode *tmp;
+  171|      2|
+  172|     11|  while (curr != nullptr) {
+  173|     10|    // moving forward to right to find the spot of data
+  174|     12|    while (curr->forward->value < data) {
+  175|      2|      curr = curr->forward;
+  176|      2|    }
+  177|     10|    if (curr->forward->value == data) {
+  178|      2|      while (curr != nullptr) {
+  179|      1|        tmp = curr;
+  180|      1|        // Moving down
+  181|      1|        curr = curr->down;
+  182|      1|        // Skipping one node (To Delete it)
+  183|      1|        tmp->backward->forward = tmp->forward;
+  184|      1|        tmp->forward = nullptr;
+  185|      1|        tmp->backward = nullptr;
+  186|      1|        tmp->up = nullptr;
+  187|      1|        tmp->down = nullptr;
+  188|      1|        delete tmp; // delete to prevent memory leak
+  189|      1|        tmp = nullptr;
+  190|      1|      }
+  191|      1|      return true; // Return true after successfully deleting
+  192|      1|    }
+  193|      9|    // keep moving down
+  194|      9|    curr = curr->down;
+  195|      9|  }
+  196|      2|  return false; // If cannot find existing, cannot delete.
+  197|      2|}
+  198|       |
+  199|       |// Given a SNode, place it before the given NextNode
+  200|       |// Pre: two pointers node has no ref to each other
+  201|       |// Post: provide ref (back and forward) for two nodes
+  202|      9|void SkipList::addBefore(SNode *NewNode, SNode *NextNode) {
+  203|      9|  assert(NewNode != nullptr && NextNode != nullptr &&
+  204|      9|         NewNode->value < NextNode->value);
+  205|      9|  // Link next to node in front
+  206|      9|  NewNode->forward = NextNode;
+  207|      9|  // Link prev to node behind
+  208|      9|  NewNode->backward = NextNode->backward;
+  209|      9|  // Link node in back to new node
+  210|      9|  NextNode->backward->forward = NewNode;
+  211|      9|  // Link node in front to new node
+  212|      9|  NextNode->backward = NewNode;
+  213|      9|  assert(NewNode->forward == NextNode && NextNode->backward == NewNode);
+  214|      9|  assert(NewNode->backward != nullptr &&
+  215|      9|         NewNode->backward->value < NewNode->value);
+  216|      9|}
+  217|       |
+  218|       |/*
+  219|       |// Checks to see whether or not a data value exists in the list
+  220|       |// Returns the NODE if the value exists in the SkipList.
+  221|       |// Returns nullptr otherwise
+  222|       |// Must be O(logn)
+  223|       |SNode *SkipList::containsSNode(int data) const {
+  224|       |  SNode *curr = FrontGuards[maxLevel - 1];
+  225|       |  while (curr != nullptr) {
+  226|       |    while (curr->forward->value < data) {
+  227|       |      curr = curr->forward;
+  228|       |    }
+  229|       |    if (curr->forward->value == data) {
+  230|       |      return curr;
+  231|       |    }
+  232|       |  }
+  233|       |  return nullptr;
+  234|       |}
+  235|       |*/
+  236|       |
+  237|       |// Checks to see whether or not a data value exists in the list
+  238|       |// Returns true if the value exists in the SkipList.
+  239|       |// Returns false otherwise
+  240|       |// Must be O(logn)
+  241|       |// Pre: unable to check if value exist
+  242|       |// Post: return true if value exist in skiplist, false otherwise
+  243|      7|bool SkipList::contains(int data) const {
+  244|      7|  SNode *tmp = FrontGuards[maxLevel - 1];
+  245|     27|  while (tmp->down != nullptr) {
+  246|     23|    tmp = tmp->down;
+  247|     28|    while (data >= tmp->forward->value) {
+  248|      8|      tmp = tmp->forward;
+  249|      8|      if (data == tmp->value) {
+  250|      3|        return true;
+  251|      3|      }
+  252|      8|    }
+  253|     23|  }
+  254|      7|  return false;
+  255|      7|}
+
+Mon 22 Nov 2021 09:55:39 PM PST
+=====================================================
+To create an output.txt file with all the output from this script
+Run the below command
+      ./create-output.sh > output.txt 2>&1 
+=====================================================
